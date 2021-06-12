@@ -55,7 +55,8 @@ class OcclusionAwareGenerator(nn.Module):
             deformation = F.interpolate(deformation, size=(h, w), mode='bilinear')
             deformation = deformation.permute(0, 2, 3, 1)
         return F.grid_sample(inp, deformation)
-
+    
+    @torch.jit.ignore
     def forward(self, source_image, kp_driving, kp_source):
         # Encoding (downsampling) part
         out = self.first(source_image)
